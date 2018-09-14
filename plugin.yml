@@ -1,0 +1,3 @@
+name: ApartiumCommons
+version: 1
+main: net.apartium.commons.bukkit.ApartiumCommonsPlugin

@@ -1,0 +1,4 @@
+name: ApartiumCommons
+main: net.apartium.commons.bungee.ApartiumCommonsBungeePlugin
+version: 1
+authour: Apartium
