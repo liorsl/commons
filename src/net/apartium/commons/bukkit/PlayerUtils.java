@@ -123,8 +123,7 @@ public class PlayerUtils {
 	 * 
 	 * @param player
 	 *            a player
-	 * @throws ClassNotFoundException
-	 * 
+	 *
 	 */
 	public static void disableCordinationShow(Player player) {
 		Validate.notNull(player, "player +-");
@@ -142,7 +141,6 @@ public class PlayerUtils {
 	 * 
 	 * @param player
 	 *            a player
-	 * @throws ClassNotFoundException
 	 */
 	public static void enableCordinationShow(Player player) {
 		Validate.notNull(player, "player +-");

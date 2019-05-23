@@ -69,42 +69,17 @@ public class EntityUtils {
 			throws IllegalArgumentException, NoSuchFieldException {
 		Validate.notNull(entity, "entity +-");
 		Validate.notNull(value, "value +-");
-		Validate.notEmpty(fieldName, "fieldName +-");
-		
-		Object instance;
-		Class<?> clazz;
 
-		if (nms) 
-			instance = NMSUtils.getHandle(entity);
-		else 
-			instance = entity;
-		
-		clazz = instance.getClass();
-		
-		Field field;
-		
-		try {
-			field = clazz.getField(fieldName);
-		} catch (NoSuchFieldException e) {
-			try {
-				field = clazz.getDeclaredField(fieldName);
-			} catch(NoSuchFieldException e1) {
-				throw e1;
-			}
-		}
-		
-		boolean acc = field.isAccessible();
-		field.setAccessible(true);
-		
+		Object instance = nms ? NMSUtils.getHandle(entity) : entity;
+
+		Field field = NMSUtils.getField(instance, fieldName);
+
 		try {
 			field.set(instance, value);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		
-		if (!acc) 
-			field.setAccessible(false);
-		
+
 	}
 
 	/**
@@ -121,29 +96,9 @@ public class EntityUtils {
 		Validate.notNull(entity, "player +-");
 		Validate.notEmpty(fieldName, "fieldName +-");
 		
-		Object instance;
-		Class<?> clazz;
-		
-		if (nms) 
-			instance = NMSUtils.getHandle(entity);
-		else 
-			instance = entity;
-		
-		clazz = instance.getClass();
-		
-		Field field;
-		try {
-			field = clazz.getField(fieldName);
-		} catch (NoSuchFieldException e) {
-			try {
-				field = clazz.getDeclaredField(fieldName);
-			} catch(NoSuchFieldException e1) {
-				throw e1;
-			}
-		}
-		
-		boolean acc = field.isAccessible();
-		field.setAccessible(true);
+		Object instance = nms ? NMSUtils.getHandle(entity) : entity;
+
+		Field field = NMSUtils.getField(instance, fieldName);
 
 		Object value = null;
 		try {
@@ -152,9 +107,6 @@ public class EntityUtils {
 			e.printStackTrace();
 		}
 
-		if (!acc) 
-			field.setAccessible(false);
-		
 		return value;
 	}
 

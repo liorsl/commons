@@ -1,6 +1,7 @@
 package net.apartium.commons.minecraft;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import com.google.common.reflect.ClassPath.ClassInfo;
 
 import net.apartium.commons.ExceptionHandler;
 import net.apartium.commons.Validate;
+import org.bukkit.entity.Entity;
 
 /**
 * <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
@@ -190,6 +192,41 @@ public class NMSUtils {
 			ExceptionHandler.getInstance().handle(e);
 			return null;
 		}
+	}
+
+	public static Field getField(Entity entity, boolean nms, String fieldName) throws NoSuchFieldException {
+		Object instance;
+
+		if (nms)
+			instance = NMSUtils.getHandle(entity);
+		else
+			instance = entity;
+
+		return getField(instance, fieldName);
+	}
+
+	public static Field getField(Object object, String fieldName) throws NoSuchFieldException {
+		Validate.notNull(object, "object +-");
+		Validate.notEmpty(fieldName, "fieldName +-");
+
+		Class<?> clazz = object.getClass();
+
+		Field field;
+
+		try {
+			field = clazz.getField(fieldName);
+		} catch (NoSuchFieldException e) {
+			try {
+				field = clazz.getDeclaredField(fieldName);
+			} catch(NoSuchFieldException e1) {
+				throw e1;
+			}
+		}
+
+		boolean acc = field.isAccessible();
+		field.setAccessible(true);
+
+		return field;
 	}
 
 	public static class NMSText {
