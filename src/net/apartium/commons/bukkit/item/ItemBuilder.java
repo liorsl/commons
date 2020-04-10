@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.apartium.commons.bukkit.XMaterial;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.apartium.commons.Validate;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 /**
 * <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
@@ -287,6 +289,22 @@ public class ItemBuilder implements Cloneable {
 			setLore(new ArrayList<>());
 
 		return this.item.getItemMeta().getLore();
+	}
+
+	/**
+	 * Set dye armor color. If current item is not a leather armor, does nothing.
+	 *
+	 * @param color
+	 * 			color to set to
+	 */
+	public ItemBuilder setArmorColor(Color color) {
+		if (item.getItemMeta() instanceof LeatherArmorMeta) {
+			LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+			meta.setColor(color);
+			item.setItemMeta(meta);
+		}
+
+		return this;
 	}
 
 	/**
