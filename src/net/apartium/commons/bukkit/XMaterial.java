@@ -1,6 +1,5 @@
 package net.apartium.commons.bukkit;
 
-import com.sun.istack.internal.NotNull;
 import lombok.NonNull;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -1177,7 +1176,7 @@ public enum XMaterial {
      * @param name the name of the material.
      * @return the duplicated XMaterial based on the version.
      */
-    private static XMaterial requestDuplicatedXMaterial(@NotNull String name, byte data) {
+    private static XMaterial requestDuplicatedXMaterial(@NonNull String name, byte data) {
         Validate.notEmpty(name, "Material name cannot be null or empty");
         XMaterial mat = requestOldXMaterial(name, data);
         return mat == null ? null : mat.name().endsWith("S") ? valueOf(name) : mat;
@@ -1190,7 +1189,7 @@ public enum XMaterial {
      * @return the new XMaterial of this duplicated material.
      * @see #getXMaterialIfDuplicated(String)
      */
-    public static XMaterial getNewXMaterialIfDuplicated(@NotNull String name) {
+    public static XMaterial getNewXMaterialIfDuplicated(@NonNull String name) {
         Validate.notEmpty(name, "Material name cannot be null or empty");
         return DUPLICATED.entrySet().stream()
                 .filter(m -> m.getKey().name().equals(format(name)))
@@ -1206,7 +1205,7 @@ public enum XMaterial {
      * @return the other XMaterial (key or value) of the XMaterial (key or value) which the name was equals to.
      * @see #matchXMaterial(String, byte)
      */
-    public static XMaterial getXMaterialIfDuplicated(@NotNull String name) {
+    public static XMaterial getXMaterialIfDuplicated(@NonNull String name) {
         Validate.notEmpty(name, "Material name cannot be null or empty");
         String formatted = format(name);
         Optional<Map.Entry<XMaterial, XMaterial>> mat = DUPLICATED.entrySet().stream().filter(m
