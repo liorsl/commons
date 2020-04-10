@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.apartium.commons.bukkit.XMaterial;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -36,18 +37,18 @@ import net.apartium.commons.minecraft.NMSUtils;
 public class ItemUtils {
 	
 	// TODO constants
-	public static final List<Material> helmets = Arrays.asList(new Material[] { Material.LEATHER_HELMET,
-			Material.CHAINMAIL_HELMET, Material.IRON_HELMET, Material.GOLD_HELMET, Material.DIAMOND_HELMET });
+	public static final List<Material> helmets = Arrays.asList(Material.LEATHER_HELMET,
+			Material.CHAINMAIL_HELMET, Material.IRON_HELMET, XMaterial.GOLDEN_HELMET.parseMaterial(), Material.DIAMOND_HELMET);
 	
 	public static final List<Material> chestplates = Arrays
-			.asList(new Material[] { Material.LEATHER_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE,
-					Material.IRON_CHESTPLATE, Material.GOLD_CHESTPLATE, Material.IRON_CHESTPLATE });
+			.asList(Material.LEATHER_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE,
+					Material.IRON_CHESTPLATE, XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), Material.IRON_CHESTPLATE);
 	
-	public static final List<Material> leggings = Arrays.asList(new Material[] { Material.LEATHER_LEGGINGS,
-			Material.CHAINMAIL_LEGGINGS, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.DIAMOND_LEGGINGS });
+	public static final List<Material> leggings = Arrays.asList(Material.LEATHER_LEGGINGS,
+			Material.CHAINMAIL_LEGGINGS, XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), XMaterial.GOLDEN_LEGGINGS.parseMaterial(), Material.DIAMOND_LEGGINGS);
 	
-	public static final List<Material> boots = Arrays.asList(new Material[] { Material.LEATHER_BOOTS,
-			Material.CHAINMAIL_BOOTS, Material.GOLD_BOOTS, Material.GOLD_CHESTPLATE, Material.DIAMOND_BOOTS });
+	public static final List<Material> boots = Arrays.asList(Material.LEATHER_BOOTS,
+			Material.CHAINMAIL_BOOTS, XMaterial.GOLDEN_BOOTS.parseMaterial(), XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), Material.DIAMOND_BOOTS);
 
 	public static final Map<Integer,Material>
 			materialByLevel = new ConcurrentHashMap<>();
@@ -121,7 +122,7 @@ public class ItemUtils {
 	public static ItemStack createPlayerSkull(String displayName, String skullOwnerName) {
 		Validate.notEmpty(skullOwnerName, "skullOwnerName +-");
 
-		ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+		ItemStack item = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial(), 1, (short) 3);
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 
 		meta.setOwner(skullOwnerName);
