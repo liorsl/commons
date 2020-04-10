@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import net.apartium.commons.bukkit.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +38,100 @@ public class ItemBuilder implements Cloneable {
 
 	/**
 	 * Create new item builder
-	 * 
+	 *
+	 * @param material
+	 *            the material to use
+	 * @param amount
+	 *            amount of the items in the stack
+	 */
+	public ItemBuilder(Material material, int amount) {
+		this(material, amount, null, null, null);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use, as an XMaterial
+	 * @param amount
+	 *            amount of the items in the stack
+	 */
+	public ItemBuilder(XMaterial material, int amount) {
+		this(material.parseMaterial(), amount);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use, as an XMaterial
+	 * @param amount
+	 *            amount of the items in the stack
+	 */
+	public ItemBuilder(XMaterial material, int amount, String name, List<String> lore,
+					   Map<Enchantment, Integer> enchantments) {
+		this(material.parseMaterial(), amount, name, lore, enchantments);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use, as an XMaterial
+	 * @param amount
+	 *            amount of the items in the stack
+	 * @param name
+	 *            the name of the item
+	 */
+	public ItemBuilder(XMaterial material, int amount, String name) {
+		this(material.parseMaterial(), amount, name, null, null);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use
+	 * @param amount
+	 *            amount of the items in the stack
+	 * @param name
+	 *            the name of the item
+	 */
+	public ItemBuilder(Material material, int amount, String name) {
+		this(material, amount, name, null, null);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use, as an XMaterial
+	 */
+
+	public ItemBuilder(XMaterial material) {
+		this(material.parseMaterial());
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
+	 * @param material
+	 *            the material to use
+	 */
+	public ItemBuilder(Material material) {
+		this(material, 0, null, null, null);
+
+	}
+
+	/**
+	 * Create new item builder
+	 *
 	 * @param material
 	 *            the material to use
 	 * @param amount
@@ -59,44 +153,6 @@ public class ItemBuilder implements Cloneable {
 
 	}
 
-	/**
-	 * Create new item builder
-	 * 
-	 * @param material
-	 *            the material to use
-	 * @param amount
-	 *            amount of the items in the stack
-	 */
-	public ItemBuilder(Material material, int amount) {
-		this(material, amount, null, null, null);
-
-	}
-
-	/**
-	 * Create new item builder
-	 * 
-	 * @param material
-	 *            the material to use
-	 * @param amount
-	 *            amount of the items in the stack
-	 * @param name
-	 *            the name of the item
-	 */
-	public ItemBuilder(Material material, int amount, String name) {
-		this(material, amount, name, null, null);
-
-	}
-
-	/**
-	 * Create new item builder
-	 * 
-	 * @param material
-	 *            the material to use
-	 */
-	public ItemBuilder(Material material) {
-		this(material, 0, null, null, null);
-
-	}
 
 	/**
 	 * Set name of the item
