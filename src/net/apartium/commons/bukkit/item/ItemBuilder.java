@@ -308,6 +308,23 @@ public class ItemBuilder implements Cloneable {
 	}
 
 	/**
+	 * Make current item glow (as with enchanted items).
+	 */
+	public ItemBuilder glow() {
+		return setGlow(true);
+	}
+
+	/**
+	 * Make current item glow or now glow (as with enchanted items).
+	 * @param value
+	 * 			true for glow, else false
+	 */
+	public ItemBuilder setGlow(boolean value) {
+		this.item = ItemUtils.glow(this.item, value);
+		return this;
+	}
+
+	/**
 	 * Clone this item builder
 	 * 
 	 * @return cloned item builder instance with the same parameters
