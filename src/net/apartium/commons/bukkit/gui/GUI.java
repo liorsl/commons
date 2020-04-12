@@ -226,8 +226,8 @@ public class GUI implements Listener {
 			return;
 		Player player = (Player) event.getWhoClicked();
 		ItemProperties properties = getProperties(this.views.get(player).getValue(), event.getCurrentItem());
-		if (properties != null && properties.getHandler() != null)
-			properties.getHandler().click(this, event.getSlot(), event.getCurrentItem(), player, properties);
+		if (properties != null && properties.getHandler() != null && properties.getHandler().click(this, event.getSlot(), event.getCurrentItem(), player, properties))
+			event.setCancelled(true);
 
 	}
 }
