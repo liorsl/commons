@@ -77,8 +77,8 @@ public class GUI implements Listener {
 	 * @return the processed title
 	 */
 	public String getTitle(int page, Player player) {
-		return title.replaceAll("{PLAYER}", player.getName()).replaceAll("{PLAYERDISPLAY}", player.getDisplayName())
-				.replaceAll("{PAGE}", page + "");
+		return title.replaceAll("\\{PLAYER}", player.getName()).replaceAll("\\{PLAYERDISPLAY}", player.getDisplayName())
+				.replaceAll("\\{PAGE}", page + "");
 	}
 
 	/**
