@@ -38,7 +38,7 @@ public class NBTUtils {
 
 	/**
 	 * Set the NBT of an item to specified value
-	 * 
+	 *
 	 * @param itemstack
 	 *            the itemstack
 	 * @param value

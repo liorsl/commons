@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.server.v1_11_R1.EntityPlayer;
 import org.apache.commons.lang.reflect.ConstructorUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.apache.commons.lang.reflect.MethodUtils;
@@ -283,7 +284,7 @@ public class PlayerUtils {
 	 * Toggle player flying state NOTE: For this to work the player must be allowed
 	 * to flight
 	 * 
-	 * @param player
+	 * @param players
 	 *            player to toggle fly to
 	 * @return the current fly status
 	 */

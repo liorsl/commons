@@ -1,9 +1,11 @@
 package net.apartium.commons.bukkit;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.reflect.MethodUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -22,38 +24,41 @@ import net.apartium.commons.minecraft.NMSUtils;
 * @since wip-unknownversion
 */
 public class EntityUtils {
-	
+
 	private EntityUtils() {}
 	
 	private static final Map<Entity, Listener> 
-				godListeners = new HashMap<>(),
 				harmListeners = new HashMap<>();
 
 	/**
 	 * Set this entity as invulnerable (Will not be able to take any damage)
-	 * @param plugin The plugin to register the required listener to
 	 * @param entity The entity to set mode to
 	 * @param mode True for make the entity not able to take damage, false to reverse it
 	 */
-	public static void setInvulnerable(Plugin plugin, final Entity entity, boolean mode) {
+	public static void setInvulnerable(final Entity entity, boolean mode) {
 		Validate.notNull(entity, "entity +-");
-		
-		if (mode) {
-			Validate.notNull(plugin, "plugin +-");
 
-			Listener listener = new Listener() {
-				@EventHandler
-				public void onDamage(EntityDamageEvent e) {
-					if (e.getEntity().equals(entity)) 
-						e.setCancelled(true);
-					
-				}
-			};
+		try {
+			setField(entity, true, "invulnerable", mode);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		}
 
-			Bukkit.getPluginManager().registerEvents(listener, plugin);
-		} else if (godListeners.containsKey(entity))
-			EntityDamageEvent.getHandlerList().unregister((Listener) godListeners.get(entity));
-		
+	}
+
+	public static void setSilent(final Entity entity, boolean mode) {
+
+		Validate.notNull(entity, "entity +-");
+
+		try {
+			MethodUtils.invokeMethod(entity, "setSilent", mode);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
