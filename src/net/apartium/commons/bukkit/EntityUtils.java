@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.SneakyThrows;
 import org.apache.commons.lang.reflect.MethodUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -46,19 +47,20 @@ public class EntityUtils {
 
 	}
 
+	@SneakyThrows
 	public static void setSilent(final Entity entity, boolean mode) {
-
 		Validate.notNull(entity, "entity +-");
 
-		try {
-			MethodUtils.invokeMethod(entity, "setSilent", mode);
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+
+		MethodUtils.invokeMethod(NMSUtils.getHandle(entity), "setSilent", mode);
+	}
+
+	@SneakyThrows
+	public static void setNoAI(final Entity entity, boolean mode) {
+		Validate.notNull(entity, "entity +-");
+
+		MethodUtils.invokeMethod(NMSUtils.getHandle(entity), "k", mode);
+
 	}
 
 	/**
