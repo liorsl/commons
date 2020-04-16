@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
@@ -25,35 +26,40 @@ public class CommandUtils {
 	
 	private static Method
 			GET_COMMAND_MAP;
-	
+
+	@Getter
+	private static CommandMap
+			commandMap;
+
 	static {
 		try {
 			PLUGIN_COMMAND_CONS = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
 			PLUGIN_COMMAND_CONS.setAccessible(true);
 			
 			GET_COMMAND_MAP = NMSUtils.CRAFT_SERVER.getMethod("getCommandMap");
-			
+
+			commandMap = loadCommandMap();
+
 		} catch (NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	/**
-	 * Getting the command map of the server.
-	 * 
-	 * @return the command map of the server.
-	 */
-	public static CommandMap getCommandMap() {
-		try {
-			return (CommandMap) GET_COMMAND_MAP.invoke(org.bukkit.Bukkit.getServer());
-		} catch (Exception e) {
 			ExceptionHandler.getInstance().handle(e);
+
 		}
-		
-		return null;
+
 	}
-	
+
+	/**
+	 * Load command map from bukkit, via invoking CraftServer#getCommandMap again, for whatever reason you might want to do it.
+	 * @return A command map instance
+	 */
+	public static CommandMap loadCommandMap() {
+		try {
+			return (CommandMap) GET_COMMAND_MAP.invoke(Bukkit.getServer());
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			ExceptionHandler.getInstance().handle(e);
+			return null;
+		}
+	}
+
 	/**
 	 * Create a new instance of plugin command and register it to the command map
 	 * @param name the name of the command
