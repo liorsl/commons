@@ -45,10 +45,16 @@ public class NMSUtils {
 	
 	private NMSUtils() {}
 
+	/**
+	 * @deprecated Each class should load its own requirements
+	 */
+	@Deprecated
 	public static final Class<?>
-	// NMS
-			NMS_ENTITY = getClassInternal(true, "Entity"), NMS_HUMAN = getClassInternal(true, "EntityHuman"),
-			NMS_PLAYER = getClassInternal(true, "EntityPlayer"), NMS_PACKET = getClassInternal(true, "Packet"),
+			// NMS
+			NMS_ENTITY = getClassInternal(true, "Entity"),
+			NMS_HUMAN = getClassInternal(true, "EntityHuman"),
+			NMS_PLAYER = getClassInternal(true, "EntityPlayer"),
+			NMS_PACKET = getClassInternal(true, "Packet"),
 			NMS_PLAYERCONNECTION = getClassInternal(true, "PlayerConnection"),
 			NMS_CHATSERIALIZER = getClassInternal(true, "ChatSerializer"),
 			NMS_MINECRAFTSERVER = getClassInternal(true, "MinecraftServer"),
