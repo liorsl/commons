@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.apartium.commons.ExceptionHandler;
 import net.apartium.commons.Validate;
-import net.apartium.commons.reflect.StackTraceUtils;
+import sun.reflect.Reflection;
 
 /**
 * <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
@@ -110,8 +110,7 @@ public class PluginUtils {
 	 * @return the required plugin
 	 */
 	public static JavaPlugin getInvoker(int before) {
-
-		return getOwner(StackTraceUtils.getClassAtStacktrace(before));
+		return getOwner(Reflection.getCallerClass(before));
 	}
 
 	/**
@@ -120,7 +119,7 @@ public class PluginUtils {
 	 * @return the required plugin
 	 */
 	public static JavaPlugin getInvoker() {
-		return getInvoker(1);
+		return getOwner(Reflection.getCallerClass());
 	}
 
 	public static Plugin getInvokerOtherThan(int startFromBefore, Plugin... plugins) {
