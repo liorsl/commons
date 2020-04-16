@@ -59,6 +59,7 @@ public class NMSUtils {
 			NMS_ICOMMANDLISTENER = getClassInternal(true, "ICommandListener"),
 			NMS_ITEMSTACK = getClassInternal(true, "ItemStack"),
 			NMS_TILEENTITY = getClassInternal(true, "TileEntity"),
+			NMS_ENUMHAND = getClassInternal(true, "EnumHand"),
 			
 			// Craft
 			CRAFT_ENTITY = getClassInternal(false, "entity.CraftEntity"),
