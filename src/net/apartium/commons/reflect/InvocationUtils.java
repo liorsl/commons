@@ -102,6 +102,7 @@ public class InvocationUtils {
 					field.setAccessible(true);
 					return new AbstractMap.SimpleEntry<>(field, field.get(handler.invokerInstance));
 				} catch (IllegalArgumentException | IllegalAccessException e) {
+					e.printStackTrace();
 				}
 		return null;
 	}
@@ -129,7 +130,7 @@ public class InvocationUtils {
 		protected Object proxied;
 
 		protected <I> ApartiumInvocationHandler(Class<?> in, Class<I> invoker, I instance)
-				throws IllegalArgumentException, IllegalAccessException {
+				throws IllegalArgumentException {
 			Validate.notNull(in, "in +-");
 			Validate.notNull(invoker, "invoker +-");
 			Validate.notNull(instance, "instance +-");
@@ -188,9 +189,6 @@ public class InvocationUtils {
 			Validate.notNull(instance, "instance +-");
 			Validate.notNull(method, "method +-");
 			Validate.notEmpty(arguments, "arguments +-");
-
-			if (method == null)
-				throw new NullPointerException("Method can't be null");
 
 			try {
 				return method.invoke(instance, arguments == null ? new Object[0] : arguments);
