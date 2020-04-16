@@ -14,6 +14,7 @@ import org.apache.commons.lang.reflect.ConstructorUtils;
 import org.apache.commons.lang.reflect.FieldUtils;
 import org.apache.commons.lang.reflect.MethodUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -376,8 +377,8 @@ public class PlayerUtils {
 			e.printStackTrace();
 			return;
 		}
-		Object headerChat = NMSUtils.NMSText.ofString(header);
-		Object footerChat = NMSUtils.NMSText.ofString(footer);
+		Object headerChat = NMSUtils.NMSText.ofString(ChatColor.translateAlternateColorCodes('&', header));
+		Object footerChat = NMSUtils.NMSText.ofString(ChatColor.translateAlternateColorCodes('&', footer));
 		try {
 			Field headerField = packet.getClass().getDeclaredField("a");
 			headerField.setAccessible(true);
