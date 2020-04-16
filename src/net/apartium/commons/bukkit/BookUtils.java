@@ -25,7 +25,7 @@ public class BookUtils {
 	static {
 		try {
 			openBook = NMSUtils.NMS_PLAYER.getMethod("a",
-					new Class[] { NMSUtils.getClass(true, "ItemStack"), NMSUtils.getClass(true, "EnumHand") });
+					NMSUtils.getClass(true, "ItemStack"), NMSUtils.getClass(true, "EnumHand"));
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
 			ExceptionHandler.getInstance().handle(e);
 		}
@@ -55,9 +55,8 @@ public class BookUtils {
 		try {
 			player.getInventory().setItemInMainHand(book);
 			Object entityPlayer = NMSUtils.getHandle(player);
-			Class<?> enumHand = NMSUtils.getClass(true, "EnumHand");
-			Object[] enumArray = enumHand.getEnumConstants();
-			openBook.invoke(entityPlayer, new Object[] { ItemUtils.asNMSCopy(book), enumArray[0] });
+			Object[] enumArray = NMSUtils.NMS_ENUMHAND.getEnumConstants();
+			openBook.invoke(entityPlayer, ItemUtils.asNMSCopy(book), enumArray[0]);
 		} catch (ReflectiveOperationException e) {
 			ExceptionHandler.getInstance().handle(e);
 		}
