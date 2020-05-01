@@ -3,13 +3,11 @@ package net.apartium.commons.bukkit.item;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
+import com.sun.deploy.xml.XMLAttribute;
 import net.apartium.commons.bukkit.XMaterial;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.Material;
@@ -37,18 +35,32 @@ import net.apartium.commons.minecraft.NMSUtils;
 public class ItemUtils {
 	
 	// TODO constants
-	public static final List<Material> helmets = Arrays.asList(Material.LEATHER_HELMET,
-			Material.CHAINMAIL_HELMET, Material.IRON_HELMET, XMaterial.GOLDEN_HELMET.parseMaterial(), Material.DIAMOND_HELMET);
+	public static final List<Material> helmets = createMaterialList(
+			XMaterial.LEATHER_HELMET, XMaterial.CHAINMAIL_HELMET, XMaterial.IRON_HELMET, XMaterial.GOLDEN_HELMET, XMaterial.DIAMOND_HELMET);
 	
-	public static final List<Material> chestplates = Arrays
-			.asList(Material.LEATHER_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE,
-					Material.IRON_CHESTPLATE, XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), Material.IRON_CHESTPLATE);
+	public static final List<Material> chestplates = createMaterialList(
+			XMaterial.LEATHER_CHESTPLATE, XMaterial.CHAINMAIL_CHESTPLATE, XMaterial.IRON_CHESTPLATE, XMaterial.GOLDEN_CHESTPLATE, XMaterial.IRON_CHESTPLATE);
 	
-	public static final List<Material> leggings = Arrays.asList(Material.LEATHER_LEGGINGS,
-			Material.CHAINMAIL_LEGGINGS, XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), XMaterial.GOLDEN_LEGGINGS.parseMaterial(), Material.DIAMOND_LEGGINGS);
+	public static final List<Material> leggings = createMaterialList(
+			XMaterial.LEATHER_LEGGINGS, XMaterial.CHAINMAIL_LEGGINGS, XMaterial.GOLDEN_CHESTPLATE, XMaterial.GOLDEN_LEGGINGS, XMaterial.DIAMOND_LEGGINGS);
 	
-	public static final List<Material> boots = Arrays.asList(Material.LEATHER_BOOTS,
-			Material.CHAINMAIL_BOOTS, XMaterial.GOLDEN_BOOTS.parseMaterial(), XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), Material.DIAMOND_BOOTS);
+	public static final List<Material> boots = createMaterialList(
+			XMaterial.LEATHER_BOOTS, XMaterial.CHAINMAIL_BOOTS, XMaterial.GOLDEN_BOOTS, XMaterial.GOLDEN_CHESTPLATE, XMaterial.DIAMOND_BOOTS);
+
+	public static final List<Material> PICKAXES = createMaterialList(
+			XMaterial.WOODEN_PICKAXE, XMaterial.STONE_PICKAXE, XMaterial.IRON_PICKAXE, XMaterial.GOLDEN_PICKAXE, XMaterial.DIAMOND_PICKAXE);
+
+	public static final List<Material> AXES = createMaterialList(
+			XMaterial.WOODEN_AXE, XMaterial.STONE_AXE, XMaterial.IRON_AXE, XMaterial.GOLDEN_AXE, XMaterial.DIAMOND_AXE);
+
+	public static final List<Material> SHOVELS = createMaterialList(
+			XMaterial.WOODEN_SHOVEL, XMaterial.STONE_SHOVEL, XMaterial.IRON_SHOVEL, XMaterial.GOLDEN_SHOVEL, XMaterial.DIAMOND_SHOVEL);
+
+	public static final List<Material> HOES = createMaterialList(
+			XMaterial.WOODEN_HOE, XMaterial.STONE_HOE, XMaterial.IRON_HOE, XMaterial.GOLDEN_HOE, XMaterial.DIAMOND_HOE);
+
+	public static final List<Material> MISC_TOOLS = createMaterialList(
+			XMaterial.FLINT_AND_STEEL, XMaterial.FISHING_ROD, XMaterial.SHEARS);
 
 	public static final Map<Integer,Material>
 			materialByLevel = new ConcurrentHashMap<>();
@@ -107,6 +119,10 @@ public class ItemUtils {
 		materialByLevel.put(0, Material.DIAMOND);
 
 		
+	}
+
+	public static List<Material> createMaterialList(XMaterial... xMaterial) {
+		return Arrays.asList(xMaterial).stream().map(XMaterial::parseMaterial).collect(Collectors.toList());
 	}
 
 	/**
@@ -178,6 +194,30 @@ public class ItemUtils {
 		else if (isLeggings(item)) equipment.setLeggings(item);
 		else if (isBoots(item)) equipment.setBoots(item);
 		
+	}
+
+	public static boolean isTool(Material type) {
+		return isHoe(type) || isShovel(type) || isAxe(type) || isPickaxe(type);
+	}
+
+	public static boolean isUtility(Material type) {
+		return MISC_TOOLS.contains(type);
+	}
+
+	public static boolean isHoe(Material type) {
+		return HOES.contains(type);
+	}
+
+	public static boolean isShovel(Material type) {
+		return SHOVELS.contains(type);
+	}
+
+	public static boolean isAxe(Material type) {
+		return AXES.contains(type);
+	}
+
+	public static boolean isPickaxe(Material type) {
+		return PICKAXES.contains(type);
 	}
 	
 	public static boolean isArmorPart(Material type) {
