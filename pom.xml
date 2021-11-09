@@ -81,5 +81,17 @@
       <id>bungeecord-repo</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
+      <repository>
+        <id>nms-repo</id>
+        <url>https://repo.codemc.io/repository/nms/</url>
+      </repository>
   </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub OWNER Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/liorsl/commons</url>
+    </repository>
+  </distributionManagement>
 </project>
